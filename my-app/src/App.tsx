@@ -6,12 +6,34 @@ if (true) {
   content = <MyButton />;
 }
 
+const products = [
+  { title: 'Yellow', color: 'yellow', id: 1 },
+  { title: 'Purple', color: 'purple', id: 2 },
+  { title: 'Blue', color: 'blue', id: 3 },
+];
 
 export default function App() {
   return (
     <div>
+      <List />
       {content}
     </div>
+  )
+}
+
+function List() {
+  const listItems = products.map(product =>
+    <li
+      key={product.id}
+      style={{
+        color: product.color
+      }}
+    >
+      {product.title}
+    </li>
+  );
+  return (
+    <ul>{listItems}</ul>
   )
 }
 

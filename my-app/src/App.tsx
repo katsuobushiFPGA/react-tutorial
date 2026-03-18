@@ -17,9 +17,11 @@ export default function App() {
     <div>
       <List />
       {content}
+      <MyButton />
     </div>
   )
 }
+
 
 function List() {
   const listItems = products.map(product =>
@@ -62,9 +64,13 @@ function Profile() {
 
 
 function MyButton() {
+  function handleClick() {
+    alert('You clicked me!');
+  }
+
   return (
-    <button>
-      I'm a button
+    <button onClick={handleClick}>
+      Click me
     </button>
   );
 }

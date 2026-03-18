@@ -20,6 +20,7 @@ export default function App() {
       <List />
       {content}
       <MyButton />
+      <MyButton />
     </div>
   )
 }

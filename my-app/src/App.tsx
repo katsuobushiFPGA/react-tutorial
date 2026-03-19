@@ -4,6 +4,8 @@ import TextBox from './TextBox'
 import Todo from './HtmlToJsx'
 import Avatar, { TodoList } from './Braces'
 import ProfileA from './Props'
+import Spread from './Spread'
+import { Profile as ProfileB } from './Card'
 
 let content;
 
@@ -38,6 +40,13 @@ export default function App() {
       <Avatar />
       <TodoList />
       <ProfileA />
+      <Spread
+        person={{ name: 'hiroto' }}
+        size={100}
+        isSepia={false}
+        thickBorder={'test'}
+      />
+      <ProfileB />
     </div>
   )
 }

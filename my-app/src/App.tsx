@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Gallery } from './Profile'
 import TextBox from './TextBox'
 import Todo from './HtmlToJsx'
+import Avatar, { TodoList } from './Braces'
 
 let content;
 
@@ -33,6 +34,8 @@ export default function App() {
       <Gallery />
       <TextBox />
       <Todo />
+      <Avatar />
+      <TodoList />
     </div>
   )
 }

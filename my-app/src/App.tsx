@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Gallery } from './Profile'
 
 let content;
 
@@ -27,6 +28,7 @@ export default function App() {
       {content}
       <MyButton count={count} onClick={handleClick} />
       <MyButton count={count} onClick={handleClick} />
+      <Gallery />
     </div>
   )
 }

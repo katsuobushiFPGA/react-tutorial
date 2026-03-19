@@ -131,6 +131,35 @@ return (
 
 Profile.tsxというのを作って、中にProfileとGalleryの関数を入れてexportしてみた。
 
+### コンポーネントのネストと整理方法
+
+!!落とし穴!!
+
+コンポーネントをネストするのは許されない…！
+子コンポーネントが親コンポーネントの情報を必要とする場合は、propsを使えとのこと。
+まあチュートリアルでやったところだね。
+
+```react
+function Child({count, onClick}) {
+    return (
+      <button onClick={{ handle }}>Click {count} times</button>  
+    )
+}
+
+function Parent() {
+    const [count, setCount] = useState(0);
+    
+    function handleClick() {
+        setCount(count + 1);
+    }
+
+    return (
+        <div>
+            <Child count={count} onClick={handleClick} />
+        </div>
+    )
+}
+```
 
 
 

@@ -3,6 +3,7 @@ import { Gallery } from './Profile'
 import TextBox from './TextBox'
 import Todo from './HtmlToJsx'
 import Avatar, { TodoList } from './Braces'
+import ProfileA from './Props'
 
 let content;
 
@@ -36,6 +37,7 @@ export default function App() {
       <Todo />
       <Avatar />
       <TodoList />
+      <ProfileA />
     </div>
   )
 }

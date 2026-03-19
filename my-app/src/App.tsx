@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Gallery } from './Profile'
 import TextBox from './TextBox'
+import Todo from './HtmlToJsx'
 
 let content;
 
@@ -31,6 +32,7 @@ export default function App() {
       <MyButton count={count} onClick={handleClick} />
       <Gallery />
       <TextBox />
+      <Todo />
     </div>
   )
 }

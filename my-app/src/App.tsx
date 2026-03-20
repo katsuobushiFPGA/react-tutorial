@@ -6,6 +6,7 @@ import Avatar, { TodoList } from './Braces'
 import ProfileA from './Props'
 import Spread from './Spread'
 import { Profile as ProfileB } from './Card'
+import PackingList from './PackingList'
 
 let content;
 
@@ -47,6 +48,7 @@ export default function App() {
         thickBorder={'test'}
       />
       <ProfileB />
+      <PackingList />
     </div>
   )
 }

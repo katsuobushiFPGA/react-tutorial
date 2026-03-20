@@ -7,6 +7,7 @@ import ProfileA from './Props'
 import Spread from './Spread'
 import { Profile as ProfileB } from './Card'
 import PackingList from './PackingList'
+import { List as ListA } from './List'
 
 let content;
 
@@ -49,6 +50,7 @@ export default function App() {
       />
       <ProfileB />
       <PackingList />
+      <ListA />
     </div>
   )
 }

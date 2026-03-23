@@ -39,7 +39,10 @@
 |---|---------|------|
 | 1 | [1_adding-interactivity.md](./2_interactivity/1_adding-interactivity.md) | インタラクティビティの追加 |
 | - | [1_ai_question_summary.md](./2_interactivity/1_ai_question_summary.md) | AI への質問まとめ |
+| - | [2_ai_question_summary.md](./2_interactivity/2_ai_question_summary.md) | AI への質問まとめ |
 | 2 | [2_responding-to-events.md](./2_interactivity/2_responding-to-events.md) | イベントへの応答 |
+| 3 | [3_state-a-components-memory.md](./2_interactivity/3_state-a-components-memory.md) | state: コンポーネントのメモリ |
+| - | [3_ai_question_summary.md](./2_interactivity/3_ai_question_summary.md) | AI への質問まとめ |
 
 ## プロジェクト構成
 

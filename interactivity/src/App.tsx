@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { sculptureList } from './data.js';
 import './App.css'
 import { Toolbar, Toolbar2, Toolbar3 } from './Toolbar.tsx'
-import Gallery from './Gallery.tsx';
+import Gallery, { Gallery2 } from './Gallery.tsx';
 import Form from './Form.tsx'
 
 export default function App() {
@@ -16,6 +16,7 @@ export default function App() {
       />
       <Toolbar2 />
       <Toolbar3 />
+      <Gallery2 />
     </>
   );
 }

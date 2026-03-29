@@ -50,6 +50,29 @@
 | - | [6_ai_question_summary.md](./2_interactivity/6_ai_question_summary.md) | AI への質問まとめ |
 | 7 | [7_updating-objects-in-state.md](./2_interactivity/7_updating-objects-in-state.md) | state 内のオブジェクトの更新 |
 | - | [7_ai_question_summary.md](./2_interactivity/7_ai_question_summary.md) | AI への質問まとめ |
+| 8 | [8_updating-arrays-in-state.md](./2_interactivity/8_updating-arrays-in-state.md) | state 内の配列の更新 |
+| - | [8_ai_question_summary.md](./2_interactivity/8_ai_question_summary.md) | AI への質問まとめ |
+
+### 3. state の管理 (`3_state/`)
+
+| # | ファイル | 内容 |
+|---|---------|------|
+| 2 | [2_reacting-to-input-with-state.md](./3_state/2_reacting-to-input-with-state.md) | state を使って入力に反応する |
+| 3 | [3_choosing-the-state-structure.md](./3_state/3_choosing-the-state-structure.md) | state 構造の選択 |
+| - | [3_ai_question_summary.md](./3_state/3_ai_question_summary.md) | AI への質問まとめ |
+| 4 | [4_sharing-state-between-components.md](./3_state/4_sharing-state-between-components.md) | コンポーネント間での state の共有 |
+| 5 | [5_preserving-and-resetting-state.md](./3_state/5_preserving-and-resetting-state.md) | state の保持とリセット |
+| - | [5_qi_question_summary.md](./3_state/5_qi_question_summary.md) | AI への質問まとめ |
+
+### 4. 避難ハッチ (`4_escape_hatches/`)
+
+| # | ファイル | 内容 |
+|---|---------|------|
+| 2 | [2_referenceing-values-with-refs.md](./4_escape_hatches/2_referenceing-values-with-refs.md) | ref で値を参照する |
+| - | [1_ai_question_summary.md](./4_escape_hatches/1_ai_question_summary.md) | AI への質問まとめ (useReducer) |
+| - | [2_ai_question_summary.md](./4_escape_hatches/2_ai_question_summary.md) | AI への質問まとめ (useRef) |
+| 3 | [3_manipulating-the-dom-with-refs.md](./4_escape_hatches/3_manipulating-the-dom-with-refs.md) | ref で DOM を操作する |
+| - | [3_ai_question_summary.md](./4_escape_hatches/3_ai_question_summary.md) | AI への質問まとめ (ref) |
 
 ## プロジェクト構成
 
@@ -57,6 +80,8 @@
 react-dev/
 ├── 1_ui/                # セクション1: UI の記述（学習ノート）
 ├── 2_interactivity/     # セクション2: インタラクティビティ（学習ノート）
+├── 3_state/             # セクション3: state の管理（学習ノート）
+├── 4_escape_hatches/    # セクション4: 避難ハッチ（学習ノート）
 ├── my-app/              # セクション1 用 Vite + React + TS アプリ
 │   └── src/
 │       ├── App.tsx              # すべてのコンポーネントを集約
@@ -72,22 +97,27 @@ react-dev/
 │       ├── TextBox.tsx          # テキストボックス
 │       ├── data.tsx             # サンプルデータ（科学者一覧）
 │       └── Utils.tsx            # 共通ユーティリティ
-└── interactivity/       # セクション2 用 Vite + React + TS アプリ
-    └── src/
-        ├── App.tsx              # インタラクティビティデモ集約
-        ├── Counter.tsx          # カウンター（state）
-        ├── Gallery.tsx          # ギャラリー
-        ├── Form.tsx             # フォーム
-        ├── Form2.tsx            # フォーム（別パターン）
-        ├── Toolbar.tsx          # ツールバー（イベント）
-        ├── Signup.tsx           # サインアップフォーム
-        ├── BucketList.tsx       # バケットリスト
-        ├── Form3.tsx            # フォーム（state スナップショット）
-        ├── Form4.tsx            # フォーム（state 更新キュー）
-        ├── Form5.tsx            # フォーム（オブジェクト state）
-        ├── Form6.tsx            # フォーム（ネストオブジェクト state）
-        ├── MovingDot.tsx        # 移動するドット（オブジェクト state）
-        └── data.tsx             # サンプルデータ
+├── interactivity/       # セクション2 用 Vite + React + TS アプリ
+│   └── src/
+│       ├── App.tsx              # インタラクティビティデモ集約
+│       ├── Counter.tsx          # カウンター（state）
+│       ├── CounterList.tsx      # カウンターリスト
+│       ├── Gallery.tsx          # ギャラリー
+│       ├── Image.tsx            # 画像コンポーネント
+│       ├── Form.tsx             # フォーム
+│       ├── Form2.tsx            # フォーム（別パターン）
+│       ├── Form3.tsx            # フォーム（state スナップショット）
+│       ├── Form4.tsx            # フォーム（state 更新キュー）
+│       ├── Form5.tsx            # フォーム（オブジェクト state）
+│       ├── Form6.tsx            # フォーム（ネストオブジェクト state）
+│       ├── Toolbar.tsx          # ツールバー（イベント）
+│       ├── Signup.tsx           # サインアップフォーム
+│       ├── BucketList.tsx       # バケットリスト
+│       ├── List.tsx ~ List4.tsx # リスト（配列 state デモ）
+│       ├── ShapeEditor.tsx      # 図形エディタ（配列 state デモ）
+│       ├── MovingDot.tsx        # 移動するドット（オブジェクト state）
+│       └── data.tsx             # サンプルデータ
+└── state/               # セクション3 用 Vite + React + TS アプリ
 ```
 
 ## 開発サーバーの起動
@@ -100,6 +130,11 @@ npm run dev
 
 # セクション2: インタラクティビティ
 cd interactivity
+npm install
+npm run dev
+
+# セクション3: state の管理
+cd state
 npm install
 npm run dev
 ```

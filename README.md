@@ -73,6 +73,13 @@
 | - | [2_ai_question_summary.md](./4_escape_hatches/2_ai_question_summary.md) | AI への質問まとめ (useRef) |
 | 3 | [3_manipulating-the-dom-with-refs.md](./4_escape_hatches/3_manipulating-the-dom-with-refs.md) | ref で DOM を操作する |
 | - | [3_ai_question_summary.md](./4_escape_hatches/3_ai_question_summary.md) | AI への質問まとめ (ref) |
+| 4 | [4_synchronizing-with-effects.md](./4_escape_hatches/4_synchronizing-with-effects.md) | エフェクトを使った同期 |
+| - | [4_ai_question_summary.md](./4_escape_hatches/4_ai_question_summary.md) | AI への質問まとめ (Effect) |
+| 5 | [5_you-might-not-need-an-effect.md](./4_escape_hatches/5_you-might-not-need-an-effect.md) | エフェクトは必要ないかもしれない |
+| - | [5_ai_question_summary.md](./4_escape_hatches/5_ai_question_summary.md) | AI への質問まとめ |
+| 6 | [6_lifecycle-of-reactive-effects.md](./4_escape_hatches/6_lifecycle-of-reactive-effects.md) | リアクティブエフェクトのライフサイクル |
+| 7 | [7_separating-events-from-effects.md](./4_escape_hatches/7_separating-events-from-effects.md) | イベントとエフェクトを切り離す |
+| - | [7_ai_question_summary.md](./4_escape_hatches/7_ai_question_summary.md) | AI への質問まとめ |
 
 ## プロジェクト構成
 
@@ -117,7 +124,11 @@ react-dev/
 │       ├── ShapeEditor.tsx      # 図形エディタ（配列 state デモ）
 │       ├── MovingDot.tsx        # 移動するドット（オブジェクト state）
 │       └── data.tsx             # サンプルデータ
-└── state/               # セクション3 用 Vite + React + TS アプリ
+├── state/               # セクション3 用 Vite + React + TS アプリ
+└── escape-hatches/      # セクション4 用 Vite + React + TS アプリ
+    └── src/
+        ├── App.tsx              # エフェクト・ref デモ集約
+        └── Modal.tsx            # モーダル（エフェクトデモ）
 ```
 
 ## 開発サーバーの起動
@@ -135,6 +146,11 @@ npm run dev
 
 # セクション3: state の管理
 cd state
+npm install
+npm run dev
+
+# セクション4: 避難ハッチ
+cd escape-hatches
 npm install
 npm run dev
 ```

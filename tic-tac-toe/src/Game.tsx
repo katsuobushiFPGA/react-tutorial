@@ -77,6 +77,7 @@ function Board({ xIsNext, squares, onPlay }) {
 export function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
+  const [isAsc, setIsAsc] = useState(true);
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
@@ -90,7 +91,7 @@ export function Game() {
     setCurrentMove(nextMove);
   }
 
-  const moves = history.map((squares, move) => {
+  let moves = history.map((squares, move) => {
     let description;
     if (move === currentMove) {
       description = 'You are at move #...';
@@ -106,6 +107,9 @@ export function Game() {
       </li>
     );
   });
+  if (!isAsc) {
+    moves = moves.slice().reverse();
+  }
 
   return (
     <div className="game">
@@ -114,6 +118,11 @@ export function Game() {
       </div>
       <div className="game-info">
         <ol>{moves}</ol>
+      </div>
+      <div className="toggle">
+        <button onClick={() => {
+          setIsAsc(!isAsc);
+        }}>{isAsc ? 'asc' : 'desc'}</button>
       </div>
     </div>
   );

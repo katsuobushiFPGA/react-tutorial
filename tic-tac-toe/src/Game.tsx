@@ -1,11 +1,12 @@
 import { useState } from 'react';
 
-function Square({ value, onSquareClick }) {
+function Square({ value, isHighlight, onSquareClick }) {
 
   return (
     <button
       className="square"
       onClick={onSquareClick}
+      style={{ backgroundColor: isHighlight ? '#ffeb3b' : undefined }}
     >
       {value}
     </button>
@@ -26,7 +27,7 @@ function calculateWinner(squares) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+      return { winner: squares[a], line: [a, b, c] };
     }
   }
   return null;
@@ -46,7 +47,11 @@ function Board({ xIsNext, squares, onPlay }) {
     onPlay(nextSquares);
   }
 
-  const winner = calculateWinner(squares);
+  const result = calculateWinner(squares);
+  const winner = result?.winner ?? null;
+  const line = result?.line ?? [];
+
+  console.log(winner, squares);
   let status;
   if (winner) {
     status = "Winner: " + winner;
@@ -68,6 +73,7 @@ function Board({ xIsNext, squares, onPlay }) {
               <Square
                 key={index}
                 value={squares[index]}
+                isHighlight={line.includes(index)}
                 onSquareClick={() => handleClick(index)}
               />
             );

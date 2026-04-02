@@ -58,11 +58,12 @@ function Board({ xIsNext, squares, onPlay }) {
     <>
       <div className="status">{status}</div>
       {[0, 1, 2].map((y) => (
-        <div className="board-row">
+        <div className="board-row" key={y}>
           {[0, 1, 2].map((x) => {
             const index = y * 3 + x;
             return (
               <Square
+                key={index}
                 value={squares[index]}
                 onSquareClick={() => handleClick(index)}
               />
@@ -77,7 +78,7 @@ function Board({ xIsNext, squares, onPlay }) {
 export function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
-  const [isAsc, setIsAsc] = useState(true);
+  const [isAsc, setIsAsc] = useState(false);
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 

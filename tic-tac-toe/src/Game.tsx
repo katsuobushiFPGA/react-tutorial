@@ -35,7 +35,7 @@ function calculateWinner(squares: SquareValue[]) {
     [1, 4, 7],
     [2, 5, 8],
     [0, 4, 8],
-    [2, 4, 6]
+    [2, 4, 6],
   ];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
@@ -53,9 +53,9 @@ function Board({ xIsNext, squares, onPlay }: BoardProps) {
     }
     const nextSquares = squares.slice();
     if (xIsNext) {
-      nextSquares[i] = "×";
+      nextSquares[i] = '×';
     } else {
-      nextSquares[i] = "○";
+      nextSquares[i] = '○';
     }
     onPlay(nextSquares, i);
   }
@@ -65,12 +65,11 @@ function Board({ xIsNext, squares, onPlay }: BoardProps) {
   const line = result?.line ?? [];
   let status;
   if (winner) {
-    status = "Winner: " + winner;
+    status = 'Winner: ' + winner;
   } else if (squares.every((e) => e !== null)) {
-    status = "Draw";
-  }
-  else {
-    status = "Next player: " + (xIsNext ? "×" : "○");
+    status = 'Draw';
+  } else {
+    status = 'Next player: ' + (xIsNext ? '×' : '○');
   }
 
   return (
@@ -97,7 +96,10 @@ function Board({ xIsNext, squares, onPlay }: BoardProps) {
 
 export function Game() {
   const [history, setHistory] = useState([
-    { squares: Array(9).fill(null) as SquareValue[], move: null as number | null }
+    {
+      squares: Array(9).fill(null) as SquareValue[],
+      move: null as number | null,
+    },
   ]);
   const [currentMove, setCurrentMove] = useState(0);
   const [isAsc, setIsAsc] = useState(true);
@@ -107,7 +109,7 @@ export function Game() {
   function handlePlay(nextSquares: SquareValue[], i: number) {
     const nextHistory = [
       ...history.slice(0, currentMove + 1),
-      { squares: nextSquares, move: i }
+      { squares: nextSquares, move: i },
     ];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
@@ -117,19 +119,22 @@ export function Game() {
     let description;
     if (move === currentMove) {
       description = `You are at move #${move}`;
-    }
-    else if (entry.move !== null) {
+    } else if (entry.move !== null) {
       const row = Math.floor(entry.move / 3) + 1;
       const col = (entry.move % 3) + 1;
       description = `Go to move #${move} (${row}, ${col})`;
     } else {
-      description = "Go to game start";
+      description = 'Go to game start';
     }
     return (
       <li key={move}>
-        <button onClick={() => {
-          setCurrentMove(move);
-        }}>{description}</button>
+        <button
+          onClick={() => {
+            setCurrentMove(move);
+          }}
+        >
+          {description}
+        </button>
       </li>
     );
   });
@@ -146,9 +151,13 @@ export function Game() {
         <ol>{moves}</ol>
       </div>
       <div className="toggle">
-        <button onClick={() => {
-          setIsAsc(!isAsc);
-        }}>{isAsc ? 'asc ↑' : 'desc ↓'}</button>
+        <button
+          onClick={() => {
+            setIsAsc(!isAsc);
+          }}
+        >
+          {isAsc ? 'asc ↑' : 'desc ↓'}
+        </button>
       </div>
     </div>
   );

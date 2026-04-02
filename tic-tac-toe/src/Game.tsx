@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 type SquareValue = '×' | '○' | null;
+type WinnerResult = { winner: SquareValue; line: number[] } | null;
 
 interface SquareProps {
   value: SquareValue;
@@ -26,7 +27,7 @@ function Square({ value, isHighlight, onSquareClick }: SquareProps) {
   );
 }
 
-function calculateWinner(squares: SquareValue[]) {
+function calculateWinner(squares: SquareValue[]): WinnerResult {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -61,7 +62,7 @@ function Board({ xIsNext, squares, onPlay }: BoardProps) {
   }
 
   const result = calculateWinner(squares);
-  const winner = result?.winner ?? null;
+  const winner = result?.winner;
   const line = result?.line ?? [];
   let status;
   if (winner) {
@@ -115,7 +116,7 @@ export function Game() {
     setCurrentMove(nextHistory.length - 1);
   }
 
-  let moves = history.map((entry, move) => {
+  const baseList = history.map((entry, move) => {
     let description;
     if (move === currentMove) {
       description = `You are at move #${move}`;
@@ -128,19 +129,11 @@ export function Game() {
     }
     return (
       <li key={move}>
-        <button
-          onClick={() => {
-            setCurrentMove(move);
-          }}
-        >
-          {description}
-        </button>
+        <button onClick={() => setCurrentMove(move)}>{description}</button>
       </li>
     );
   });
-  if (!isAsc) {
-    moves = moves.toReversed();
-  }
+  const moves = isAsc ? baseList : baseList.toReversed();
 
   return (
     <div className="game">

@@ -1,4 +1,4 @@
-import { Board } from './Square.tsx'
+import { Board } from './Board.tsx'
 
 function App() {
   return (

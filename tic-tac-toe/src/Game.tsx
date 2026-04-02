@@ -85,7 +85,7 @@ function Board({ xIsNext, squares, onPlay }) {
 
 export function Game() {
   const [history, setHistory] = useState([
-    { squares: Array(9).fill(null), move: 0 }
+    { squares: [Array(9).fill(null)], move: 0 }
   ]);
   const [currentMove, setCurrentMove] = useState(0);
   const [isAsc, setIsAsc] = useState(false);

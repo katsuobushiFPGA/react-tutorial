@@ -1,10 +1,9 @@
-import { Square } from './Square.tsx'
-import './styles.css'
+import { Board } from './Square.tsx'
 
 function App() {
   return (
     <>
-      <Square />
+      <Board />
     </>
   )
 }

@@ -1,9 +1,9 @@
-import { Board } from './Board.tsx'
+import { Game } from './Game.tsx'
 
 function App() {
   return (
     <>
-      <Board />
+      <Game />
     </>
   )
 }

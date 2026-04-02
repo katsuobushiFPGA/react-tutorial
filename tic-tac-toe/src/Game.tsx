@@ -1,6 +1,21 @@
 import { useState } from 'react';
 
-function Square({ value, isHighlight, onSquareClick }) {
+type SquareValue = '×' | '○' | null;
+
+interface SquareProps {
+  value: SquareValue;
+  isHighlight: boolean;
+  onSquareClick: () => void;
+}
+
+interface BoardProps {
+  xIsNext: boolean;
+  squares: SquareValue[];
+  onPlay: (nextSquares: SquareValue[], index: number) =>
+    void;
+}
+
+function Square({ value, isHighlight, onSquareClick }: SquareProps) {
 
   return (
     <button
@@ -33,8 +48,8 @@ function calculateWinner(squares) {
   return null;
 }
 
-function Board({ xIsNext, squares, onPlay }) {
-  function handleClick(i) {
+function Board({ xIsNext, squares, onPlay }: BoardProps) {
+  function handleClick(i: number) {
     if (squares[i] || calculateWinner(squares)) {
       return;
     }
@@ -50,15 +65,14 @@ function Board({ xIsNext, squares, onPlay }) {
   const result = calculateWinner(squares);
   const winner = result?.winner ?? null;
   const line = result?.line ?? [];
-  console.log(squares.every((e) => e !== null));
   let status;
   if (winner) {
     status = "Winner: " + winner;
-  } else if (winner === null && squares.every((e) => e !== null)) {
+  } else if (squares.every((e) => e !== null)) {
     status = "Draw";
   }
   else {
-    status = "Next player: " + (xIsNext ? "X" : "O");
+    status = "Next player: " + (xIsNext ? "x" : "○");
   }
 
   return (
@@ -85,13 +99,12 @@ function Board({ xIsNext, squares, onPlay }) {
 
 export function Game() {
   const [history, setHistory] = useState([
-    { squares: [Array(9).fill(null)], move: 0 }
+    { squares: Array(9).fill(null) as SquareValue[], move: 0 }
   ]);
   const [currentMove, setCurrentMove] = useState(0);
-  const [isAsc, setIsAsc] = useState(false);
+  const [isAsc, setIsAsc] = useState(true);
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove].squares;
-  console.log("currentSquares: " + currentSquares);
 
   function handlePlay(nextSquares, i) {
     const nextHistory = [

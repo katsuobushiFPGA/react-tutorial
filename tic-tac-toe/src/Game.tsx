@@ -38,8 +38,7 @@ function calculateWinner(squares: SquareValue[]): WinnerResult {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
+  for (const [a, b, c] of lines) {
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
       return { winner: squares[a], line: [a, b, c] };
     }
@@ -144,11 +143,7 @@ export function Game() {
         <ol>{moves}</ol>
       </div>
       <div className="toggle">
-        <button
-          onClick={() => {
-            setIsAsc(!isAsc);
-          }}
-        >
+        <button onClick={() => setIsAsc(!isAsc)}>
           {isAsc ? 'asc ↑' : 'desc ↓'}
         </button>
       </div>

@@ -15,7 +15,6 @@ interface BoardProps {
 }
 
 function Square({ value, isHighlight, onSquareClick }: SquareProps) {
-
   return (
     <button
       className="square"
@@ -71,7 +70,7 @@ function Board({ xIsNext, squares, onPlay }: BoardProps) {
     status = "Draw";
   }
   else {
-    status = "Next player: " + (xIsNext ? "x" : "○");
+    status = "Next player: " + (xIsNext ? "×" : "○");
   }
 
   return (
@@ -98,7 +97,7 @@ function Board({ xIsNext, squares, onPlay }: BoardProps) {
 
 export function Game() {
   const [history, setHistory] = useState([
-    { squares: Array(9).fill(null) as SquareValue[], move: 0 }
+    { squares: Array(9).fill(null) as SquareValue[], move: null as number | null }
   ]);
   const [currentMove, setCurrentMove] = useState(0);
   const [isAsc, setIsAsc] = useState(true);
@@ -114,25 +113,23 @@ export function Game() {
     setCurrentMove(nextHistory.length - 1);
   }
 
-  function jumpTo(nextMove: number) {
-    setCurrentMove(nextMove);
-  }
-
   let moves = history.map((entry, move) => {
     let description;
     if (move === currentMove) {
-      description = 'You are at move #...';
+      description = `You are at move #${move}`;
     }
-    else if (move > 0) {
+    else if (entry.move !== null) {
       const row = Math.floor(entry.move / 3) + 1;
       const col = (entry.move % 3) + 1;
       description = `Go to move #${move} (${row}, ${col})`;
     } else {
-      description = 'Go to game start';
+      description = "Go to game start";
     }
     return (
       <li key={move}>
-        <button onClick={() => jumpTo(move)}>{description}</button>
+        <button onClick={() => {
+          setCurrentMove(move);
+        }}>{description}</button>
       </li>
     );
   });

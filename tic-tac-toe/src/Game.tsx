@@ -50,7 +50,10 @@ function Board({ xIsNext, squares, onPlay }) {
   let status;
   if (winner) {
     status = "Winner: " + winner;
-  } else {
+  } else if (winner === null && squares.every((e) => e !== null)) {
+    status = "Draw";
+  }
+  else {
     status = "Next player: " + (xIsNext ? "X" : "O");
   }
 
@@ -109,7 +112,7 @@ export function Game() {
     );
   });
   if (!isAsc) {
-    moves = moves.slice().reverse();
+    moves = moves.toReversed();
   }
 
   return (
@@ -123,7 +126,7 @@ export function Game() {
       <div className="toggle">
         <button onClick={() => {
           setIsAsc(!isAsc);
-        }}>{isAsc ? 'asc' : 'desc'}</button>
+        }}>{isAsc ? 'asc ↑' : 'desc ↓'}</button>
       </div>
     </div>
   );

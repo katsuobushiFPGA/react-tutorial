@@ -44,14 +44,13 @@ function Board({ xIsNext, squares, onPlay }) {
     } else {
       nextSquares[i] = "○";
     }
-    onPlay(nextSquares);
+    onPlay(nextSquares, i);
   }
 
   const result = calculateWinner(squares);
   const winner = result?.winner ?? null;
   const line = result?.line ?? [];
-
-  console.log(winner, squares);
+  console.log(squares.every((e) => e !== null));
   let status;
   if (winner) {
     status = "Winner: " + winner;
@@ -85,14 +84,20 @@ function Board({ xIsNext, squares, onPlay }) {
 }
 
 export function Game() {
-  const [history, setHistory] = useState([Array(9).fill(null)]);
+  const [history, setHistory] = useState([
+    { squares: Array(9).fill(null), move: 0 }
+  ]);
   const [currentMove, setCurrentMove] = useState(0);
   const [isAsc, setIsAsc] = useState(false);
   const xIsNext = currentMove % 2 === 0;
-  const currentSquares = history[currentMove];
+  const currentSquares = history[currentMove].squares;
+  console.log("currentSquares: " + currentSquares);
 
-  function handlePlay(nextSquares) {
-    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+  function handlePlay(nextSquares, i) {
+    const nextHistory = [
+      ...history.slice(0, currentMove + 1),
+      { squares: nextSquares, move: i }
+    ];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
   }
@@ -101,13 +106,15 @@ export function Game() {
     setCurrentMove(nextMove);
   }
 
-  let moves = history.map((squares, move) => {
+  let moves = history.map((entry, move) => {
     let description;
     if (move === currentMove) {
       description = 'You are at move #...';
     }
     else if (move > 0) {
-      description = 'Go to move #' + move;
+      const row = Math.floor(entry.move / 3) + 1;
+      const col = (entry.move % 3) + 1;
+      description = `Go to move #${move} (${row}, ${col})`;
     } else {
       description = 'Go to game start';
     }

@@ -39,8 +39,8 @@
 |---|---------|------|
 | 1 | [1_adding-interactivity.md](./2_interactivity/1_adding-interactivity.md) | インタラクティビティの追加 |
 | - | [1_ai_question_summary.md](./2_interactivity/1_ai_question_summary.md) | AI への質問まとめ |
-| - | [2_ai_question_summary.md](./2_interactivity/2_ai_question_summary.md) | AI への質問まとめ |
 | 2 | [2_responding-to-events.md](./2_interactivity/2_responding-to-events.md) | イベントへの応答 |
+| - | [2_ai_question_summary.md](./2_interactivity/2_ai_question_summary.md) | AI への質問まとめ |
 | 3 | [3_state-a-components-memory.md](./2_interactivity/3_state-a-components-memory.md) | state: コンポーネントのメモリ |
 | - | [3_ai_question_summary.md](./2_interactivity/3_ai_question_summary.md) | AI への質問まとめ |
 | 4 | [4_render_and_commit.md](./2_interactivity/4_render_and_commit.md) | レンダーとコミット |
@@ -68,8 +68,8 @@
 
 | # | ファイル | 内容 |
 |---|---------|------|
-| 2 | [2_referenceing-values-with-refs.md](./4_escape_hatches/2_referenceing-values-with-refs.md) | ref で値を参照する |
 | - | [1_ai_question_summary.md](./4_escape_hatches/1_ai_question_summary.md) | AI への質問まとめ (useReducer) |
+| 2 | [2_referenceing-values-with-refs.md](./4_escape_hatches/2_referenceing-values-with-refs.md) | ref で値を参照する |
 | - | [2_ai_question_summary.md](./4_escape_hatches/2_ai_question_summary.md) | AI への質問まとめ (useRef) |
 | 3 | [3_manipulating-the-dom-with-refs.md](./4_escape_hatches/3_manipulating-the-dom-with-refs.md) | ref で DOM を操作する |
 | - | [3_ai_question_summary.md](./4_escape_hatches/3_ai_question_summary.md) | AI への質問まとめ (ref) |

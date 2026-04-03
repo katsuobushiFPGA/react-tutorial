@@ -80,6 +80,9 @@
 | 6 | [6_lifecycle-of-reactive-effects.md](./4_escape_hatches/6_lifecycle-of-reactive-effects.md) | リアクティブエフェクトのライフサイクル |
 | 7 | [7_separating-events-from-effects.md](./4_escape_hatches/7_separating-events-from-effects.md) | イベントとエフェクトを切り離す |
 | - | [7_ai_question_summary.md](./4_escape_hatches/7_ai_question_summary.md) | AI への質問まとめ |
+| 8 | [8_removing-effect-dependencies.md](./4_escape_hatches/8_removing-effect-dependencies.md) | エフェクトの依存関係を取り除く |
+| - | [8_ai_question_summary.md](./4_escape_hatches/8_ai_question_summary.md) | AI への質問まとめ |
+| 9 | [9_reusing-logic-with-custom-hooks.md](./4_escape_hatches/9_reusing-logic-with-custom-hooks.md) | カスタムフックでロジックを再利用する |
 
 ## プロジェクト構成
 
@@ -125,7 +128,12 @@ react-dev/
 │       ├── MovingDot.tsx        # 移動するドット（オブジェクト state）
 │       └── data.tsx             # サンプルデータ
 ├── state/               # セクション3 用 Vite + React + TS アプリ
-└── escape-hatches/      # セクション4 用 Vite + React + TS アプリ
+├── escape-hatches/      # セクション4 用 Vite + React + TS アプリ
+├── tic-tac-toe/         # チュートリアル: 三目並べゲーム
+│   └── src/
+│       ├── App.tsx              # エントリポイント
+│       └── Game.tsx             # ゲームロジック（Square / Board / Game）
+└── todo-app/            # チュートリアル: Todo アプリ（スケルトン）
     └── src/
         ├── App.tsx              # エフェクト・ref デモ集約
         └── Modal.tsx            # モーダル（エフェクトデモ）
@@ -151,6 +159,16 @@ npm run dev
 
 # セクション4: 避難ハッチ
 cd escape-hatches
+npm install
+npm run dev
+
+# チュートリアル: 三目並べ
+cd tic-tac-toe
+npm install
+npm run dev
+
+# チュートリアル: Todo アプリ
+cd todo-app
 npm install
 npm run dev
 ```

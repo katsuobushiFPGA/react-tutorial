@@ -1,4 +1,12 @@
-export default function Header() {
+import { useState } from "react";
+
+export default function Header({
+  onRegistTodo,
+}: {
+  onRegistTodo: (text: string) => void;
+}) {
+  const [text, setText] = useState("");
+
   return (
     <div className="todo-header">
       <h1 className="todo-title">todos</h1>
@@ -13,7 +21,14 @@ export default function Header() {
           id="new-todo-input"
           type="text"
           placeholder="What needs to be done?"
-          autofocus
+          autoFocus
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          onKeyUp={(e) => {
+            if (e.key === "Enter") {
+              onRegistTodo(text);
+            }
+          }}
         />
       </div>
     </div>

@@ -1,111 +1,277 @@
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
+  --text: #aaa;
+  --text-h: #222;
   --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --border: #ebebeb;
+  --sans: system-ui, "Segoe UI", Roboto, sans-serif;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
+  font: 15px/150% var(--sans);
   color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+  background: #f7f7f7;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
+  padding: 60px 16px 100px;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+/* === TODOアプリ本体 === */
+.todo-app {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--bg);
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
+.todo-header {
+  padding: 24px 20px 0;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+.todo-title {
+  font-size: 48px;
+  font-weight: 200;
+  letter-spacing: -1px;
+  color: #ddd;
+  text-align: center;
+  margin: 0 0 16px;
 }
 
-code {
+/* 入力エリア */
+.todo-input-row {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.toggle-all {
+  appearance: none;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+  border: none;
+  background: none;
+}
+
+.toggle-all::after {
+  content: "❯";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(90deg);
+  font-size: 14px;
+  color: #ddd;
+}
+
+.toggle-all.active::after {
+  color: #999;
+}
+
+.new-todo-input {
+  flex: 1;
+  border: none;
+  outline: none;
   font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+  padding: 14px 8px;
+  background: transparent;
+  color: var(--text-h);
+  font-family: var(--sans);
+}
+
+.new-todo-input::placeholder {
+  color: #ddd;
+  font-style: italic;
+  font-weight: 300;
+}
+
+/* TODOリスト */
+.todo-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* TODOアイテム */
+.todo-item {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding: 0 12px;
+  min-height: 52px;
+}
+
+.todo-item:last-child {
+  border-bottom: none;
+}
+
+.todo-item:hover .todo-delete {
+  opacity: 1;
+}
+
+/* チェックボックス */
+.todo-check {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+  margin-right: 12px;
+  background: none;
+}
+
+.todo-check:checked {
+  border-color: #ccc;
+}
+
+.todo-check:checked::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  color: #bbb;
+}
+
+/* TODOテキスト */
+.todo-label {
+  flex: 1;
+  font-size: 15px;
+  color: var(--text-h);
+  padding: 14px 0;
+  cursor: default;
+  font-weight: 400;
+}
+
+.todo-item.completed .todo-label {
+  color: #ccc;
+  text-decoration: line-through;
+  text-decoration-color: #ddd;
+}
+
+/* 削除ボタン */
+.todo-delete {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #ccc;
+  cursor: pointer;
+  opacity: 0;
+  padding: 4px 6px;
+  line-height: 1;
+  transition: color 0.1s;
+  flex-shrink: 0;
+}
+
+.todo-delete:hover {
+  color: #999;
+}
+
+/* 編集中アイテム */
+.todo-item.editing {
+  padding: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.todo-edit-input {
+  flex: 1;
+  border: none;
+  outline: 1px solid #ccc;
+  font-size: 15px;
+  padding: 14px 12px 14px 48px;
+  background: #fafafa;
+  color: var(--text-h);
+  font-family: var(--sans);
+  width: 100%;
+}
+
+/* フッター */
+.todo-footer {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #bbb;
+  border-top: 1px solid var(--border);
+  gap: 6px;
+}
+
+.todo-count {
+  min-width: 80px;
+}
+
+.todo-count strong {
+  font-weight: 600;
+  color: #888;
+}
+
+.todo-filters {
+  display: flex;
+  gap: 2px;
+}
+
+.filter-btn {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  padding: 2px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  color: #bbb;
+  font-family: var(--sans);
+}
+
+.filter-btn.active {
+  border-color: #ccc;
+  color: #666;
+}
+
+.clear-completed {
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: #bbb;
+  cursor: pointer;
+  font-family: var(--sans);
+  padding: 2px 4px;
+  visibility: hidden;
+  min-width: 80px;
+  text-align: right;
+}
+
+.clear-completed:hover {
+  color: #999;
+}
+
+/* 空の状態 */
+.todo-empty {
+  padding: 32px;
+  text-align: center;
+  color: #ddd;
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 300;
+}
+
+/* ヒント */
+.hint {
+  text-align: center;
+  font-size: 12px;
+  color: #ccc;
+  margin-top: 20px;
 }

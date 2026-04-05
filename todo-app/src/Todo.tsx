@@ -10,7 +10,7 @@ import { useState } from "react";
 export default function Todo() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const activeTodoCount = todos.filter((todo) => !todo.done).length;
-  const completeTodoCount = todos.filter((todo) => todo.done).length;
+  const completeTodoCount = todos.length - activeTodoCount;
 
   function genId(): string {
     return crypto.randomUUID();

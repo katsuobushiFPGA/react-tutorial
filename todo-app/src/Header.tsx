@@ -16,7 +16,7 @@ export default function Header({
       <h1 className="todo-title">todos</h1>
       <div className="todo-input-row">
         <button
-          className="toggle-all"
+          className={`toggle-all ${allChecked ? "active" : ""}`}
           id="toggle-all"
           aria-label="全て選択"
           onClick={() => {

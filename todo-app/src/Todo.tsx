@@ -14,6 +14,10 @@ export default function Todo() {
     return crypto.randomUUID();
   }
 
+  function handleAllCheck(checked: boolean) {
+    setTodos((prev) => prev.map((todo) => ({ ...todo, done: checked })));
+  }
+
   function handleRegistTodo(text: string) {
     setTodos([...todos, { id: genId(), text: text, done: false }]);
   }
@@ -35,7 +39,7 @@ export default function Todo() {
   return (
     <>
       <TodoApp>
-        <Header onRegistTodo={handleRegistTodo} />
+        <Header onRegistTodo={handleRegistTodo} onCheck={handleAllCheck} />
         <List
           data={todos}
           onCheck={handleSingleCheck}

@@ -22,7 +22,7 @@ export default function Todo() {
   }
 
   function handleRegistTodo(text: string) {
-    setTodos([...todos, { id: genId(), text: text, done: false }]);
+    setTodos((prev) => [...prev, { id: genId(), text: text, done: false }]);
   }
 
   function handleSingleCheck(id: string, checked: boolean) {

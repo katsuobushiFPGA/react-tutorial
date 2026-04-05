@@ -12,7 +12,7 @@ export default function List({
   onEdit: (id: string) => void;
   onDelete: (id: string) => void;
 }) {
-  const [editingId, setEditingId] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>("");
 
   return (
     <ul className="todo-list" id="todo-list">

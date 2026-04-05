@@ -7,14 +7,15 @@ import Hint from "./Hint.tsx";
 
 import { useState } from "react";
 
+function genId(): string {
+  return crypto.randomUUID();
+}
+
 export default function Todo() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const allChecked = todos.length > 0 && todos.every((t) => t.done);
   const activeTodoCount = todos.filter((todo) => !todo.done).length;
   const completeTodoCount = todos.length - activeTodoCount;
-  function genId(): string {
-    return crypto.randomUUID();
-  }
 
   function handleAllCheck(checked: boolean) {
     setTodos((prev) => prev.map((todo) => ({ ...todo, done: checked })));

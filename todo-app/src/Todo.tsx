@@ -1,11 +1,10 @@
-import type { Todo } from "@/types/todo.ts";
+import type { Todo, FilterStatus } from "@/types/todo.ts";
+import { useState } from "react";
 import TodoApp from "./TodoApp.tsx";
 import Header from "./Header.tsx";
 import List from "./List.tsx";
 import Footer from "./Footer.tsx";
 import Hint from "./Hint.tsx";
-
-import { useState } from "react";
 
 function genId(): string {
   return crypto.randomUUID();
@@ -13,6 +12,12 @@ function genId(): string {
 
 export default function Todo() {
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [filter, setFilter] = useState<FilterStatus>("All");
+  const filteredTodos = todos.filter((t) => {
+    if (filter === "Active") return !t.done;
+    if (filter === "Completed") return t.done;
+    return true;
+  });
   const allChecked = todos.length > 0 && todos.every((t) => t.done);
   const activeTodoCount = todos.filter((todo) => !todo.done).length;
   const completeTodoCount = todos.length - activeTodoCount;
@@ -43,6 +48,10 @@ export default function Todo() {
     setTodos((prev) => prev.filter((todo) => !todo.done));
   }
 
+  function handleFilter(filter: FilterStatus) {
+    setFilter(filter);
+  }
+
   return (
     <>
       <TodoApp>
@@ -52,16 +61,18 @@ export default function Todo() {
           onCheck={handleAllCheck}
         />
         <List
-          data={todos}
+          data={filteredTodos}
           onCheck={handleSingleCheck}
           onEdit={handleEdit}
           onDelete={handleDelete}
         />
         {todos.length > 0 && (
           <Footer
+            activeFilterStatus={filter}
             activeCount={activeTodoCount}
             completeCount={completeTodoCount}
             onClearComplete={handleClearComplete}
+            onClickFilter={handleFilter}
           />
         )}
       </TodoApp>

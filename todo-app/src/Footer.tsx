@@ -1,7 +1,17 @@
+import type { FilterStatus } from "./types";
+
 export default function Footer({
+  activeFilterStatus,
   activeCount,
   completeCount,
   onClearComplete,
+  onClickFilter,
+}: {
+  activeFilterStatus: FilterStatus;
+  activeCount: number;
+  completeCount: number;
+  onClearComplete: () => void;
+  onClickFilter: (filter: FilterStatus) => void;
 }) {
   return (
     <div className="todo-footer" id="todo-footer">
@@ -9,13 +19,22 @@ export default function Footer({
         {activeCount} item left
       </span>
       <div className="todo-filters">
-        <button className="filter-btn active" data-filter="all">
+        <button
+          className={`filter-btn ${activeFilterStatus === "All" ? "active" : ""}`}
+          onClick={() => onClickFilter("All")}
+        >
           All
         </button>
-        <button className="filter-btn" data-filter="active">
+        <button
+          className={`filter-btn ${activeFilterStatus === "Active" ? "active" : ""}`}
+          onClick={() => onClickFilter("Active")}
+        >
           Active
         </button>
-        <button className="filter-btn" data-filter="completed">
+        <button
+          className={`filter-btn ${activeFilterStatus === "Completed" ? "active" : ""}`}
+          onClick={() => onClickFilter("Completed")}
+        >
           Completed
         </button>
       </div>

@@ -9,3 +9,5 @@ export type Todo = {
 export type TodoProps = {
   children: [ReactElement, ReactElement, ReactElement];
 };
+
+export type FilterStatus = "All" | "Active" | "Completed";

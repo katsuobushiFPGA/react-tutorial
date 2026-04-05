@@ -27,6 +27,7 @@ export default function Header({
           onKeyUp={(e) => {
             if (e.key === "Enter") {
               onRegistTodo(text);
+              setText("");
             }
           }}
         />

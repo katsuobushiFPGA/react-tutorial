@@ -9,14 +9,33 @@ import { useState } from "react";
 
 export default function Todo() {
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [checkIds, setCheckIds] = useState<number[]>([]);
 
   function handleRegistTodo(text: string) {
     setTodos([...todos, { id: todos.length + 1, text: text, done: false }]);
   }
 
-  function handleSingleCheck(id: number) {}
+  function handleSingleCheck(id: number) {
+    if (checkIds.includes(id)) {
+      setCheckIds(
+        checkIds.filter((tid) => {
+          return id !== tid;
+        }),
+      );
+    } else {
+      setCheckIds([...checkIds, id]);
+    }
+    console.log("handleSingleCheck, id: " + id);
+  }
 
-  function handleDelete(id: number) {}
+  function handleDelete(id: number) {
+    setTodos(
+      todos.filter((todo) => {
+        return todo.id !== id;
+      }),
+    );
+    console.log("handleDelete, id: " + id);
+  }
 
   return (
     <>

@@ -85,6 +85,12 @@
 | 9 | [9_reusing-logic-with-custom-hooks.md](./4_escape_hatches/9_reusing-logic-with-custom-hooks.md) | カスタムフックでロジックを再利用する |
 | - | [9_ai_question_summary.md](./4_escape_hatches/9_ai_question_summary.md) | AI への質問まとめ |
 
+### Todo アプリ チュートリアル (`6_todo-app/`)
+
+| # | ファイル | 内容 |
+|---|---------|------|
+| - | [ai_question_summary.md](./6_todo-app/ai_question_summary.md) | AI への質問まとめ |
+
 ## プロジェクト構成
 
 ```
@@ -133,13 +139,22 @@ react-dev/
 │   └── src/
 │       ├── App.tsx              # Modal をラップするエントリポイント
 │       └── Modal.tsx            # モーダル（useEffect + useRef デモ）
+├── 6_todo-app/          # Todo アプリ チュートリアル（学習ノート）
+│   └── ai_question_summary.md  # AI への質問まとめ
 ├── tic-tac-toe/         # チュートリアル: 三目並べゲーム
 │   └── src/
 │       ├── App.tsx              # エントリポイント
 │       └── Game.tsx             # ゲームロジック（Square / Board / Game）
-└── todo-app/            # チュートリアル: Todo アプリ（スケルトン）
+└── todo-app/            # チュートリアル: Todo アプリ
     └── src/
-        └── App.tsx              # スケルトン（未実装）
+        ├── App.tsx              # エントリポイント
+        ├── TodoApp.tsx          # Todo アプリメインコンポーネント
+        ├── Todo.tsx             # 個別 Todo コンポーネント
+        ├── List.tsx             # Todo リスト
+        ├── Header.tsx           # ヘッダー（追加フォーム）
+        ├── Footer.tsx           # フッター（フィルター）
+        ├── Hint.tsx             # ヒント表示コンポーネント
+        └── types/               # 型定義（index.ts, todo.ts）
 ```
 
 ## 開発サーバーの起動

@@ -5,13 +5,13 @@ export default function Footer({
   activeCount,
   completeCount,
   onClearComplete,
-  onClickFilter,
+  onChangeFilter,
 }: {
   activeFilterStatus: FilterStatus;
   activeCount: number;
   completeCount: number;
   onClearComplete: () => void;
-  onClickFilter: (filter: FilterStatus) => void;
+  onChangeFilter: (filter: FilterStatus) => void;
 }) {
   return (
     <div className="todo-footer" id="todo-footer">
@@ -21,19 +21,19 @@ export default function Footer({
       <div className="todo-filters">
         <button
           className={`filter-btn ${activeFilterStatus === "All" ? "active" : ""}`}
-          onClick={() => onClickFilter("All")}
+          onClick={() => onChangeFilter("All")}
         >
           All
         </button>
         <button
           className={`filter-btn ${activeFilterStatus === "Active" ? "active" : ""}`}
-          onClick={() => onClickFilter("Active")}
+          onClick={() => onChangeFilter("Active")}
         >
           Active
         </button>
         <button
           className={`filter-btn ${activeFilterStatus === "Completed" ? "active" : ""}`}
-          onClick={() => onClickFilter("Completed")}
+          onClick={() => onChangeFilter("Completed")}
         >
           Completed
         </button>

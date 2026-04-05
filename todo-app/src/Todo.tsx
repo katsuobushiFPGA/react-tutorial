@@ -9,6 +9,7 @@ import { useState } from "react";
 
 export default function Todo() {
   const [todos, setTodos] = useState<Todo[]>([]);
+  const activeTodoCount = todos.filter((todo) => !todo.done).length;
 
   function genId(): string {
     return crypto.randomUUID();
@@ -46,7 +47,7 @@ export default function Todo() {
           onEdit={handleEdit}
           onDelete={handleDelete}
         />
-        {todos.length > 0 && <Footer count={todos.length} />}
+        {todos.length > 0 && <Footer activeCount={activeTodoCount} />}
       </TodoApp>
       <Hint />
     </>

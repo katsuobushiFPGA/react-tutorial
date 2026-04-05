@@ -3,12 +3,13 @@ import { useState } from "react";
 export default function Header({
   onRegistTodo,
   onCheck,
+  allChecked,
 }: {
   onRegistTodo: (text: string) => void;
   onCheck: (checked: boolean) => void;
+  allChecked: boolean;
 }) {
   const [text, setText] = useState("");
-  const [checkAllFlg, setCheckAllFlg] = useState(false);
 
   return (
     <div className="todo-header">
@@ -19,9 +20,7 @@ export default function Header({
           id="toggle-all"
           aria-label="全て選択"
           onClick={() => {
-            const nextCheckAllFlg = !checkAllFlg;
-            setCheckAllFlg(nextCheckAllFlg);
-            onCheck(nextCheckAllFlg);
+            onCheck(!allChecked);
           }}
         ></button>
         <input

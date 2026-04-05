@@ -16,7 +16,7 @@ export default function Footer({
   return (
     <div className="todo-footer" id="todo-footer">
       <span className="todo-count" id="todo-count">
-        {activeCount} item left
+        {activeCount} item{activeCount !== 1 ? "s" : ""} left
       </span>
       <div className="todo-filters">
         <button

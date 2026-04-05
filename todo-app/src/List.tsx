@@ -1,5 +1,4 @@
 import type { Todo } from "@/types/todo";
-import { useState } from "react";
 
 export default function List({
   data,
@@ -35,6 +34,7 @@ export default function List({
             {d.id !== editingId ? (
               <>
                 <input
+                  key="view"
                   className="todo-check"
                   type="checkbox"
                   checked={d.done}
@@ -58,6 +58,7 @@ export default function List({
               </>
             ) : (
               <input
+                key="edit"
                 className="todo-edit-input"
                 type="text"
                 defaultValue={d.text}
@@ -70,6 +71,7 @@ export default function List({
                   }
                 }}
                 onBlur={(e) => onEditText(d.id, e.currentTarget.value)}
+                autoFocus
               />
             )}
           </li>

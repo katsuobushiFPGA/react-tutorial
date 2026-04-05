@@ -10,7 +10,7 @@ export default function List({
   onDelete,
 }: {
   data: Todo[];
-  editingId: string;
+  editingId: string | null;
   emptyMessage: string;
   onCheck: (id: string, checked: boolean) => void;
   onEdit: (id: string) => void;

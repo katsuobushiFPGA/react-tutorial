@@ -31,7 +31,7 @@ export default function Header({
           autoFocus
           value={text}
           onChange={(e) => setText(e.target.value)}
-          onKeyUp={(e) => {
+          onKeyDown={(e) => {
             if (e.key === "Enter" && text.trim() !== "") {
               onRegistTodo(text);
               setText("");

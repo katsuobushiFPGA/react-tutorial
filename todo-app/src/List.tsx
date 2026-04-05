@@ -62,7 +62,7 @@ export default function List({
                 className="todo-edit-input"
                 type="text"
                 defaultValue={d.text}
-                onKeyUp={(e) => {
+                onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     onEditText(d.id, e.currentTarget.value);
                   }

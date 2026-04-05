@@ -10,6 +10,7 @@ import { useState } from "react";
 export default function Todo() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const activeTodoCount = todos.filter((todo) => !todo.done).length;
+  const completeTodoCount = todos.filter((todo) => todo.done).length;
 
   function genId(): string {
     return crypto.randomUUID();
@@ -37,6 +38,10 @@ export default function Todo() {
     setTodos((prev) => prev.filter((todo) => todo.id !== id));
   }
 
+  function handleClearComplete() {
+    setTodos((prev) => prev.filter((todo) => !todo.done));
+  }
+
   return (
     <>
       <TodoApp>
@@ -47,7 +52,13 @@ export default function Todo() {
           onEdit={handleEdit}
           onDelete={handleDelete}
         />
-        {todos.length > 0 && <Footer activeCount={activeTodoCount} />}
+        {todos.length > 0 && (
+          <Footer
+            activeCount={activeTodoCount}
+            completeCount={completeTodoCount}
+            onClearComplete={handleClearComplete}
+          />
+        )}
       </TodoApp>
       <Hint />
     </>

@@ -1,4 +1,8 @@
-export default function Footer({ activeCount }) {
+export default function Footer({
+  activeCount,
+  completeCount,
+  onClearComplete,
+}) {
   return (
     <div className="todo-footer" id="todo-footer">
       <span className="todo-count" id="todo-count">
@@ -18,8 +22,9 @@ export default function Footer({ activeCount }) {
       <button
         className="clear-completed"
         id="clear-completed"
+        onClick={onClearComplete}
         style={
-          activeCount === 0
+          completeCount > 0
             ? { visibility: "visible" }
             : { visibility: "hidden" }
         }

@@ -12,6 +12,7 @@ function genId(): string {
 
 export default function Todo() {
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [filter, setFilter] = useState<FilterStatus>("All");
   const emptyMessage =
     todos.length === 0
@@ -41,7 +42,25 @@ export default function Todo() {
   }
 
   function handleEdit(id: string) {
-    console.log("handleEdit, id: " + id);
+    setEditingId(id);
+  }
+
+  function handleEditText(id: string, text: string) {
+    if (text.trim() === "") {
+      setTodos((prev) => prev.filter((todo) => todo.id !== id));
+    } else {
+      setTodos((prev) =>
+        prev.map((todo) =>
+          todo.id === id
+            ? {
+                ...todo,
+                text,
+              }
+            : todo,
+        ),
+      );
+    }
+    setEditingId(null);
   }
 
   function handleDelete(id: string) {
@@ -62,9 +81,11 @@ export default function Todo() {
         />
         <List
           data={filteredTodos}
+          editingId={editingId}
           emptyMessage={emptyMessage}
           onCheck={handleSingleCheck}
           onEdit={handleEdit}
+          onEditText={handleEditText}
           onDelete={handleDelete}
         />
         {todos.length > 0 && (

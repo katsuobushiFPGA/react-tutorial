@@ -32,7 +32,7 @@ export default function Header({
           value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyUp={(e) => {
-            if (e.key === "Enter") {
+            if (e.key === "Enter" && text.trim() !== "") {
               onRegistTodo(text);
               setText("");
             }

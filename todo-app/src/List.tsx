@@ -3,11 +3,13 @@ import { useState } from "react";
 
 export default function List({
   data,
+  emptyMessage,
   onCheck,
   onEdit,
   onDelete,
 }: {
   data: Todo[];
+  emptyMessage: string;
   onCheck: (id: string, checked: boolean) => void;
   onEdit: (id: string) => void;
   onDelete: (id: string) => void;
@@ -38,7 +40,7 @@ export default function List({
           </li>
         ))
       ) : (
-        <li className="todo-empty">タスクを追加してください</li>
+        <li className="todo-empty">{emptyMessage}</li>
       )}
     </ul>
   );

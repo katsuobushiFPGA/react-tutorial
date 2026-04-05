@@ -13,6 +13,10 @@ function genId(): string {
 export default function Todo() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [filter, setFilter] = useState<FilterStatus>("All");
+  const emptyMessage =
+    todos.length === 0
+      ? "タスクを追加してください"
+      : "該当するタスクはありません";
   const filteredTodos = todos.filter((t) => {
     if (filter === "Active") return !t.done;
     if (filter === "Completed") return t.done;
@@ -62,6 +66,7 @@ export default function Todo() {
         />
         <List
           data={filteredTodos}
+          emptyMessage={emptyMessage}
           onCheck={handleSingleCheck}
           onEdit={handleEdit}
           onDelete={handleDelete}

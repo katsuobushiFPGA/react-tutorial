@@ -1,7 +1,9 @@
-export default function Footer() {
+export default function Footer({ count }) {
   return (
     <div className="todo-footer" id="todo-footer">
-      <span className="todo-count" id="todo-count"></span>
+      <span className="todo-count" id="todo-count">
+        {count > 0 && `${count} item left`}
+      </span>
       <div className="todo-filters">
         <button className="filter-btn active" data-filter="all">
           All

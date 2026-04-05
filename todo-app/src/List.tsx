@@ -5,8 +5,8 @@ export default function List({
   onDelete,
 }: {
   data: Todo[];
-  onCheck: (id: number) => void;
-  onDelete: (id: number) => void;
+  onCheck: (id: string) => void;
+  onDelete: (id: string) => void;
 }) {
   return (
     <ul className="todo-list" id="todo-list">

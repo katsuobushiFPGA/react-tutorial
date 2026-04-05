@@ -9,31 +9,25 @@ import { useState } from "react";
 
 export default function Todo() {
   const [todos, setTodos] = useState<Todo[]>([]);
-  const [checkIds, setCheckIds] = useState<number[]>([]);
+  const [checkIds, setCheckIds] = useState<string[]>([]);
 
-  function handleRegistTodo(text: string) {
-    setTodos([...todos, { id: todos.length + 1, text: text, done: false }]);
+  function genId(): string {
+    return crypto.randomUUID();
   }
 
-  function handleSingleCheck(id: number) {
-    if (checkIds.includes(id)) {
-      setCheckIds(
-        checkIds.filter((tid) => {
-          return id !== tid;
-        }),
-      );
-    } else {
-      setCheckIds([...checkIds, id]);
-    }
+  function handleRegistTodo(text: string) {
+    setTodos([...todos, { id: genId(), text: text, done: false }]);
+  }
+
+  function handleSingleCheck(id: string) {
+    setCheckIds((prev) =>
+      prev.includes(id) ? prev.filter((tid) => id !== tid) : [...prev, id],
+    );
     console.log("handleSingleCheck, id: " + id);
   }
 
   function handleDelete(id: number) {
-    setTodos(
-      todos.filter((todo) => {
-        return todo.id !== id;
-      }),
-    );
+    setTodos((prev) => prev.filter((todo) => todo.id !== id));
     console.log("handleDelete, id: " + id);
   }
 
@@ -46,7 +40,7 @@ export default function Todo() {
           onCheck={handleSingleCheck}
           onDelete={handleDelete}
         />
-        <Footer />
+        {todos.length > 0 && <Footer count={todos.length} />}
       </TodoApp>
       <Hint />
     </>

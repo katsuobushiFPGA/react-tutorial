@@ -9,7 +9,6 @@ import { useState } from "react";
 
 export default function Todo() {
   const [todos, setTodos] = useState<Todo[]>([]);
-  const [checkIds, setCheckIds] = useState<string[]>([]);
 
   function genId(): string {
     return crypto.randomUUID();
@@ -19,16 +18,18 @@ export default function Todo() {
     setTodos([...todos, { id: genId(), text: text, done: false }]);
   }
 
-  function handleSingleCheck(id: string) {
-    setCheckIds((prev) =>
-      prev.includes(id) ? prev.filter((tid) => id !== tid) : [...prev, id],
+  function handleSingleCheck(id: string, checked: boolean) {
+    setTodos((prev) =>
+      prev.map((todo) => (todo.id === id ? { ...todo, done: checked } : todo)),
     );
-    console.log("handleSingleCheck, id: " + id);
+  }
+
+  function handleEdit(id: string) {
+    console.log("handleEdit, id: " + id);
   }
 
   function handleDelete(id: string) {
     setTodos((prev) => prev.filter((todo) => todo.id !== id));
-    console.log("handleDelete, id: " + id);
   }
 
   return (
@@ -38,6 +39,7 @@ export default function Todo() {
         <List
           data={todos}
           onCheck={handleSingleCheck}
+          onEdit={handleEdit}
           onDelete={handleDelete}
         />
         {todos.length > 0 && <Footer count={todos.length} />}

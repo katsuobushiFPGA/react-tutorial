@@ -52,10 +52,6 @@ export default function Todo() {
     setTodos((prev) => prev.filter((todo) => !todo.done));
   }
 
-  function handleChangeFilter(filter: FilterStatus) {
-    setFilter(filter);
-  }
-
   return (
     <>
       <TodoApp>
@@ -77,7 +73,7 @@ export default function Todo() {
             activeCount={activeTodoCount}
             completeCount={completeTodoCount}
             onClearComplete={handleClearComplete}
-            onChangeFilter={handleChangeFilter}
+            onChangeFilter={setFilter}
           />
         )}
       </TodoApp>

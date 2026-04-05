@@ -26,7 +26,7 @@ export default function Todo() {
     console.log("handleSingleCheck, id: " + id);
   }
 
-  function handleDelete(id: number) {
+  function handleDelete(id: string) {
     setTodos((prev) => prev.filter((todo) => todo.id !== id));
     console.log("handleDelete, id: " + id);
   }

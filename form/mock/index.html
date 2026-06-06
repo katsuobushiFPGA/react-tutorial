@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>アンケートフォーム モック</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      padding: 40px 16px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 8px;
+      color: #1a1a1a;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 40px;
+    }
+
+    /* ──────────────────── ステップインジケーター ──────────────────── */
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 48px;
+      gap: 0;
+    }
+
+    .step-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .step-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #ddd;
+      color: #999;
+      font-weight: 700;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #ddd;
+      transition: all 0.2s;
+    }
+
+    .step-circle.active {
+      background: #3b82f6;
+      color: #fff;
+      border-color: #3b82f6;
+    }
+
+    .step-circle.done {
+      background: #22c55e;
+      color: #fff;
+      border-color: #22c55e;
+    }
+
+    .step-label {
+      font-size: 11px;
+      color: #999;
+      white-space: nowrap;
+    }
+
+    .step-label.active { color: #3b82f6; font-weight: 600; }
+    .step-label.done   { color: #22c55e; }
+
+    .step-line {
+      width: 60px;
+      height: 2px;
+      background: #ddd;
+      margin-bottom: 22px;
+    }
+
+    .step-line.done { background: #22c55e; }
+
+    /* ──────────────────── カード ──────────────────── */
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      padding: 32px;
+      max-width: 560px;
+      margin: 0 auto 40px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .step-badge {
+      display: inline-block;
+      background: #eff6ff;
+      color: #3b82f6;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 20px;
+      border: 1px solid #bfdbfe;
+    }
+
+    .step-badge.current {
+      background: #3b82f6;
+      color: #fff;
+      border-color: #3b82f6;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    /* ──────────────────── フォーム要素 ──────────────────── */
+    .field {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #374151;
+    }
+
+    .required {
+      color: #ef4444;
+      margin-left: 2px;
+      font-size: 12px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #374151;
+      background: #fff;
+      transition: border-color 0.15s;
+      outline: none;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="number"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+    }
+
+    textarea { resize: vertical; min-height: 100px; }
+
+    .hint {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
+
+    /* ラジオ・チェックボックス */
+    .radio-group, .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .radio-item, .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #374151;
+      cursor: pointer;
+    }
+
+    input[type="radio"], input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #3b82f6;
+      cursor: pointer;
+    }
+
+    /* 5段階評価 */
+    .rating-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    .rating-table th {
+      padding: 8px 6px;
+      text-align: center;
+      font-size: 11px;
+      color: #6b7280;
+      font-weight: 600;
+      background: #f9fafb;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .rating-table th:first-child { text-align: left; width: 40%; }
+
+    .rating-table td {
+      padding: 10px 6px;
+      text-align: center;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .rating-table td:first-child { text-align: left; color: #374151; }
+
+    .rating-table tr:last-child td { border-bottom: none; }
+
+    /* 確認テーブル */
+    .confirm-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .confirm-table tr {
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .confirm-table tr:last-child { border-bottom: none; }
+
+    .confirm-table th {
+      padding: 12px 0;
+      text-align: left;
+      font-weight: 600;
+      color: #6b7280;
+      width: 40%;
+      vertical-align: top;
+    }
+
+    .confirm-table td {
+      padding: 12px 0;
+      color: #1a1a1a;
+    }
+
+    /* ──────────────────── ナビゲーションボタン ──────────────────── */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid #f0f0f0;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      cursor: default;
+      transition: opacity 0.15s;
+    }
+
+    .btn-back {
+      background: #f3f4f6;
+      color: #6b7280;
+      border: 1px solid #e5e7eb;
+    }
+
+    .btn-next {
+      background: #3b82f6;
+      color: #fff;
+      margin-left: auto;
+    }
+
+    .btn-submit {
+      background: #22c55e;
+      color: #fff;
+      margin-left: auto;
+    }
+
+    /* ──────────────────── 完了画面 ──────────────────── */
+    .complete-screen {
+      text-align: center;
+      padding: 40px 32px;
+      max-width: 560px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      border: 1px solid #e5e7eb;
+    }
+
+    .complete-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .complete-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+
+    .complete-msg {
+      font-size: 14px;
+      color: #6b7280;
+      line-height: 1.7;
+    }
+
+    /* ──────────────────── セクション区切り ──────────────────── */
+    .section-divider {
+      text-align: center;
+      font-size: 12px;
+      color: #d1d5db;
+      margin: 8px 0 32px;
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>アンケートフォーム</h1>
+  <p class="subtitle">静的HTMLモック — 4ステップの全画面を縦並びで表示しています</p>
+
+  <!-- ステップインジケーター（Step 1 がアクティブな状態） -->
+  <div class="step-indicator">
+    <div class="step-node">
+      <div class="step-circle active">1</div>
+      <div class="step-label active">基本情報</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step-node">
+      <div class="step-circle">2</div>
+      <div class="step-label">満足度</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step-node">
+      <div class="step-circle">3</div>
+      <div class="step-label">ご意見</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step-node">
+      <div class="step-circle">4</div>
+      <div class="step-label">確認・送信</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- STEP 1: 基本情報                         -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-header">
+      <span class="step-badge current">STEP 1</span>
+      <h2 class="card-title">基本情報</h2>
+    </div>
+
+    <div class="field">
+      <label>お名前<span class="required">*</span></label>
+      <input type="text" placeholder="山田 太郎" />
+    </div>
+
+    <div class="field">
+      <label>メールアドレス<span class="required">*</span></label>
+      <input type="email" placeholder="example@example.com" />
+      <p class="hint">回答結果の送付先として使用します</p>
+    </div>
+
+    <div class="field">
+      <label>年齢<span class="required">*</span></label>
+      <select>
+        <option value="" disabled selected>選択してください</option>
+        <option>19歳以下</option>
+        <option>20〜29歳</option>
+        <option>30〜39歳</option>
+        <option>40〜49歳</option>
+        <option>50〜59歳</option>
+        <option>60歳以上</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>性別</label>
+      <div class="radio-group">
+        <label class="radio-item"><input type="radio" name="gender" /> 男性</label>
+        <label class="radio-item"><input type="radio" name="gender" /> 女性</label>
+        <label class="radio-item"><input type="radio" name="gender" /> 回答しない</label>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn btn-next">次へ →</button>
+    </div>
+  </div>
+
+  <div class="section-divider">· · ·</div>
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- STEP 2: 満足度調査                       -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-header">
+      <span class="step-badge">STEP 2</span>
+      <h2 class="card-title">満足度調査</h2>
+    </div>
+
+    <p style="font-size:13px; color:#6b7280; margin-bottom:16px;">
+      各項目について、あてはまる評価を選んでください。<br>
+      1 = とても不満 &nbsp;/&nbsp; 5 = とても満足
+    </p>
+
+    <table class="rating-table">
+      <thead>
+        <tr>
+          <th>項目</th>
+          <th>1</th>
+          <th>2</th>
+          <th>3</th>
+          <th>4</th>
+          <th>5</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>サービスの品質</td>
+          <td><input type="radio" name="q1" /></td>
+          <td><input type="radio" name="q1" /></td>
+          <td><input type="radio" name="q1" /></td>
+          <td><input type="radio" name="q1" /></td>
+          <td><input type="radio" name="q1" /></td>
+        </tr>
+        <tr>
+          <td>使いやすさ</td>
+          <td><input type="radio" name="q2" /></td>
+          <td><input type="radio" name="q2" /></td>
+          <td><input type="radio" name="q2" /></td>
+          <td><input type="radio" name="q2" /></td>
+          <td><input type="radio" name="q2" /></td>
+        </tr>
+        <tr>
+          <td>サポート対応</td>
+          <td><input type="radio" name="q3" /></td>
+          <td><input type="radio" name="q3" /></td>
+          <td><input type="radio" name="q3" /></td>
+          <td><input type="radio" name="q3" /></td>
+          <td><input type="radio" name="q3" /></td>
+        </tr>
+        <tr>
+          <td>総合満足度</td>
+          <td><input type="radio" name="q4" /></td>
+          <td><input type="radio" name="q4" /></td>
+          <td><input type="radio" name="q4" /></td>
+          <td><input type="radio" name="q4" /></td>
+          <td><input type="radio" name="q4" /></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="nav-buttons">
+      <button class="btn btn-back">← 戻る</button>
+      <button class="btn btn-next">次へ →</button>
+    </div>
+  </div>
+
+  <div class="section-divider">· · ·</div>
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- STEP 3: ご意見・ご感想                   -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-header">
+      <span class="step-badge">STEP 3</span>
+      <h2 class="card-title">ご意見・ご感想</h2>
+    </div>
+
+    <div class="field">
+      <label>改善してほしい点をお選びください（複数可）</label>
+      <div class="checkbox-group">
+        <label class="checkbox-item"><input type="checkbox" /> 操作性・UI の改善</label>
+        <label class="checkbox-item"><input type="checkbox" /> サポート対応の速さ</label>
+        <label class="checkbox-item"><input type="checkbox" /> 価格・料金プラン</label>
+        <label class="checkbox-item"><input type="checkbox" /> 機能の充実</label>
+        <label class="checkbox-item"><input type="checkbox" /> ドキュメント・マニュアル</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>ご自由にお書きください</label>
+      <textarea placeholder="ご意見・ご要望などをご記入ください（任意）"></textarea>
+      <p class="hint">500文字以内</p>
+    </div>
+
+    <div class="field">
+      <label>このサービスを他の方に勧めますか？<span class="required">*</span></label>
+      <div class="radio-group">
+        <label class="radio-item"><input type="radio" name="recommend" /> はい、ぜひ勧めます</label>
+        <label class="radio-item"><input type="radio" name="recommend" /> 場合によっては勧めます</label>
+        <label class="radio-item"><input type="radio" name="recommend" /> 勧めません</label>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn btn-back">← 戻る</button>
+      <button class="btn btn-next">次へ →</button>
+    </div>
+  </div>
+
+  <div class="section-divider">· · ·</div>
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- STEP 4: 確認・送信                       -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-header">
+      <span class="step-badge">STEP 4</span>
+      <h2 class="card-title">確認・送信</h2>
+    </div>
+
+    <p style="font-size:13px; color:#6b7280; margin-bottom:20px;">
+      入力内容をご確認のうえ、「送信する」を押してください。
+    </p>
+
+    <table class="confirm-table">
+      <tr>
+        <th>お名前</th>
+        <td>山田 太郎</td>
+      </tr>
+      <tr>
+        <th>メールアドレス</th>
+        <td>example@example.com</td>
+      </tr>
+      <tr>
+        <th>年齢</th>
+        <td>30〜39歳</td>
+      </tr>
+      <tr>
+        <th>性別</th>
+        <td>男性</td>
+      </tr>
+      <tr>
+        <th>サービスの品質</th>
+        <td>★★★★☆（4）</td>
+      </tr>
+      <tr>
+        <th>使いやすさ</th>
+        <td>★★★★★（5）</td>
+      </tr>
+      <tr>
+        <th>サポート対応</th>
+        <td>★★★☆☆（3）</td>
+      </tr>
+      <tr>
+        <th>総合満足度</th>
+        <td>★★★★☆（4）</td>
+      </tr>
+      <tr>
+        <th>改善してほしい点</th>
+        <td>操作性・UI の改善、機能の充実</td>
+      </tr>
+      <tr>
+        <th>ご意見・ご感想</th>
+        <td style="color:#6b7280; font-style:italic;">（未記入）</td>
+      </tr>
+      <tr>
+        <th>他者への推奨</th>
+        <td>はい、ぜひ勧めます</td>
+      </tr>
+    </table>
+
+    <div class="nav-buttons">
+      <button class="btn btn-back">← 戻る</button>
+      <button class="btn btn-submit">送信する ✓</button>
+    </div>
+  </div>
+
+  <div class="section-divider">· · ·</div>
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- 完了画面（送信後）                        -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="complete-screen">
+    <div class="complete-icon">✅</div>
+    <h2 class="complete-title">送信が完了しました</h2>
+    <p class="complete-msg">
+      アンケートへのご回答ありがとうございます。<br>
+      ご登録のメールアドレス宛に確認メールをお送りします。
+    </p>
+  </div>
+
+</body>
+</html>

@@ -4,17 +4,34 @@ import { Step2 } from "./_components/form/Step2";
 import { Step3 } from "./_components/form/Step3";
 import { Step4 } from "./_components/form/Step4";
 import { Thanks } from "./_components/form/Thanks";
+import { useState } from "react";
 
-function App() {
+type StepProps = {
+  formData: FormData;
+  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+  onNext: () => void;
+  onPrev: () => void;
+};
+
+const componentMap: Record<FormState, React.ComponentType<StepProps>> = {
+  Step1,
+  Step2,
+  Step3,
+  Step4,
+  Thanks,
+};
+
+export default function App() {
+  const steps: FormState[] = ["Step1", "Step2", "Step3", "Step4", "Thanks"];
+  const Component = componentMap[steps[stepIndex]];
+  const [stepIndex, setStepIndex] = useState(0);
+  const [formData, setFormData] = useState<FormData>(initialData);
   return (
-    <>
-      <Step1 />
-      <Step2 />
-      <Step3 />
-      <Step4 />
-      <Thanks />
-    </>
+    <Component
+      formData={formData}
+      setFormData={setFormData}
+      onNext={() => setStepIndex((i) => i + 1)}
+      onPrev={() => setStepIndex((i) => i - 1)}
+    />
   );
 }
-
-export default App;

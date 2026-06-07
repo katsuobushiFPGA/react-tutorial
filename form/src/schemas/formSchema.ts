@@ -5,9 +5,9 @@ export type Form2Data = z.infer<typeof Form2Schema>;
 export type Form3Data = z.infer<typeof Form3Schema>;
 
 export const Form1Schema = z.object({
-  name: z.string().min(1).default(""),
-  mail: z.string().min(1).default(""),
-  age: z.number().int().positive(),
+  name: z.string().min(1, "お名前を入力してください").default(""),
+  mail: z.string().min(1, "メールアドレスを入力してください").default(""),
+  age: z.number().int().positive("年齢を選択してください"),
   sex: z.number().int().positive().nullable().default(null),
 });
 

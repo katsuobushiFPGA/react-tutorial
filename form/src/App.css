@@ -360,3 +360,17 @@ input[type="checkbox"] {
   margin: 8px 0 32px;
   letter-spacing: 2px;
 }
+
+/* validation */
+div.errors {
+  color: red;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+input:invalid {
+  background-color: ivory;
+  border: none;
+  outline: 2px solid red;
+  border-radius: 5px;
+}

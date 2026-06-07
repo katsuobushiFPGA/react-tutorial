@@ -6,17 +6,36 @@ import { Thanks } from "./components/Thanks";
 import { useState } from "react";
 import { FormProvider } from "./contexts/FormContext";
 
-type StepState = "Step1" | "Step2" | "Step3" | "Step4" | "Thanks";
+type StepProps = {
+  onNext: () => void;
+  onPrev: () => void;
+};
+const StepMap: React.ComponentType<StepProps>[] = [
+  Step1,
+  Step2,
+  Step3,
+  Step4,
+  Thanks,
+];
 
 export default function ZodForm() {
-  const [currentStep, setCurrentStep] = useState<StepState>("Step1");
+  const [currentStep, setCurrentStep] = useState<number>(0);
+  const CurrentComponent: React.ComponentType<StepProps> = StepMap[currentStep];
+
+  const handlePrev = () => {
+    if (currentStep > 0) {
+      setCurrentStep((prev) => prev - 1);
+    }
+  };
+  const handleNext = () => {
+    if (currentStep < StepMap.length - 1) {
+      setCurrentStep((prev) => prev + 1);
+    }
+  };
+
   return (
     <FormProvider>
-      {currentStep === "Step1" && <Step1 />}
-      {currentStep === "Step2" && <Step2 />}
-      {currentStep === "Step3" && <Step3 />}
-      {currentStep === "Step4" && <Step4 />}
-      {currentStep === "Thanks" && <Thanks />}
+      <CurrentComponent onPrev={handlePrev} onNext={handleNext} />
     </FormProvider>
   );
 }

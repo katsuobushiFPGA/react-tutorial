@@ -1,8 +1,12 @@
 import { useFormContext } from "../contexts/FormContext";
 import type { Form1Data } from "../schemas/formSchema";
+import { useState } from "react";
+import { Form1Schema } from "../schemas/formSchema";
+import type { ZodError } from "zod";
 
-export function Step1() {
+export function Step1({ onNext }: { onPrev?: () => void; onNext: () => void }) {
   const { formData, updateForm1 } = useFormContext();
+  const [errors, setErrors] = useState<ZodError | null>(null);
   const form: Form1Data = formData.form1;
 
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -17,13 +21,31 @@ export function Step1() {
   const handleChangeSex = (e: React.ChangeEvent<HTMLInputElement>) =>
     updateForm1({ ...form, sex: Number(e.target.value) });
 
+  // zod スキーマでのパース処理
+  const handleNextStep = () => {
+    const result = Form1Schema.safeParse(form);
+    if (!result.success) {
+      setErrors(result.error);
+      return;
+    }
+    setErrors(null);
+    onNext();
+  };
+
   return (
     <div className="card">
       <div className="card-header">
         <span className="step-badge current">STEP 1</span>
         <h2 className="card-title">基本情報</h2>
       </div>
-
+      {/* error表示 */}
+      {errors && (
+        <div className="errors">
+          {errors.issues.map((e, i) => (
+            <div key={i}>{e.message}</div>
+          ))}
+        </div>
+      )}
       <div className="field">
         <label>
           お名前<span className="required">*</span>
@@ -54,7 +76,7 @@ export function Step1() {
           年齢<span className="required">*</span>
         </label>
         <select onChange={handleChangeAge} defaultValue={String(form.age)}>
-          <option value="" disabled>
+          <option value="0" disabled>
             選択してください
           </option>
           <option value="1">19歳以下</option>
@@ -103,7 +125,9 @@ export function Step1() {
       </div>
 
       <div className="nav-buttons">
-        <button className="btn btn-next">次へ →</button>
+        <button className="btn btn-next" onClick={handleNextStep}>
+          次へ →
+        </button>
       </div>
     </div>
   );

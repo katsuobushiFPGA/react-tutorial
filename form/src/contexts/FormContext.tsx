@@ -1,5 +1,4 @@
 import { createContext, useContext, useState } from "react";
-import { Form1Schema, Form2Schema, Form3Schema } from "../schemas/formSchema";
 import type { Form1Data, Form2Data, Form3Data } from "../schemas/formSchema";
 
 type FormValuesType = { form1: Form1Data; form2: Form2Data; form3: Form3Data };
@@ -20,9 +19,9 @@ export function useFormContext() {
 
 export function FormProvider({ children }: React.PropsWithChildren) {
   const [formData, setFormData] = useState<FormValuesType>({
-    form1: Form1Schema.parse({}),
-    form2: Form2Schema.parse({}),
-    form3: Form3Schema.parse({}),
+    form1: { name: "", mail: "", age: 0, sex: null },
+    form2: { survey1: null, survey2: null, survey3: null, survey4: null },
+    form3: { improvement: null, opinion: "", recommend: null },
   });
 
   const updateForm1 = (data: Form1Data) => {
